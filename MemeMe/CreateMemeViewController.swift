@@ -25,12 +25,14 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var cameraButton: UIBarButtonItem!
-	@IBOutlet weak var shareButton: UIBarButtonItem!
+	@IBOutlet weak var saveButton: UIBarButtonItem!
 	@IBOutlet weak var cancelButton: UIBarButtonItem!
 	@IBOutlet weak var topTextField: UITextField!
 	@IBOutlet weak var bottomTextField: UITextField!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var initialLabel: UILabel!
+	@IBOutlet weak var navigationBar: UINavigationBar!
+	@IBOutlet weak var toolBar: UIToolbar!
 
 	// MARK: Life cycle of View Controller
 	
@@ -50,7 +52,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
 
 		// Disable share button initially
-		self.shareButton.isEnabled = false
+		self.saveButton.isEnabled = false
 		
 		// Set attributes of the text field
 		self.topTextField.defaultTextAttributes = memeTextAttributes
@@ -77,7 +79,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.unsubscribeToKeyboardNotification()
 	}
 	
-	// MARK: IBActions
+	// MARK: Pick an image
 	
 	@IBAction func pickAnImageFromAlbum(_ sender: Any) {
 		let controller = UIImagePickerController()
@@ -94,14 +96,6 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.present(controller, animated: true, completion: nil)
 	}
 	
-	@IBAction func shareMemedImage(_ sender: Any) {
-		// TODO: do when a user touch share button
-	}
-	
-	@IBAction func cancelAction(_ sender: Any) {
-		// TODO: do when a user touch cancel button
-	}
-	
 	// MARK: Delegate methods of UIImagePickerControllerDelegate
 
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -110,7 +104,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		}
 		
 		self.dismiss(animated: true) {
-			self.shareButton.isEnabled = true
+			self.saveButton.isEnabled = true
 			self.initialLabel.isHidden = true
 			self.topTextField.isHidden = false
 			self.bottomTextField.isHidden = false
@@ -120,7 +114,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		self.dismiss(animated: true) {
 			if self.imageView.image != nil {
-				self.shareButton.isEnabled = true
+				self.saveButton.isEnabled = true
 			}
 		}
 	}
@@ -183,6 +177,52 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		if self.activeTextField != nil {
 			self.activeTextField = nil
 		}
+	}
+	
+	// MARK: Generate and save memed image
+	
+	func generateMemedImage() -> UIImage {
+		// Hide navigation bar and tool bar
+		self.navigationBar.isHidden = true
+		self.toolBar.isHidden = true
+		
+		UIGraphicsBeginImageContext(self.view.frame.size)
+		self.view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+		let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+		UIGraphicsEndImageContext()
+		
+		// Show navigation bar and tool bar
+		self.navigationBar.isHidden = false
+		self.toolBar.isHidden = false
+		
+		return memedImage
+	}
+	
+	@IBAction func saveMemedImage(_ sender: Any) {
+		let controller = UIAlertController(title: "Save memed image", message: "Do you want save this memed image?", preferredStyle: .actionSheet)
+		
+		let confirmAction = UIAlertAction(title: "Confirm", style: .default) { action in
+			let meme = Meme(topText: self.topTextField.text!, bottomText: self.bottomTextField.text!, originalImage: self.imageView.image!, memedImage: self.generateMemedImage())
+			
+			// TODO: save a meme instance
+			print(meme)
+			self.dismiss(animated: true, completion: nil)
+		}
+		
+		let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) {
+			action in
+			self.dismiss(animated: true, completion: nil)
+		}
+		
+		controller.addAction(confirmAction)
+		controller.addAction(cancelAction)
+		self.present(controller, animated: true, completion: nil)
+	}
+	
+	// MARK: Cancel creating meme
+
+	@IBAction func cancelCreatingMemedImage(_ sender: Any) {
+		self.dismiss(animated: true, completion: nil)
 	}
 }
 

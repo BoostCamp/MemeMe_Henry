@@ -40,9 +40,9 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="V9k-0A-a6V"/>
-                                    <barButtonItem image="share" id="gfb-JQ-z1B">
+                                    <barButtonItem image="save" id="gfb-JQ-z1B" userLabel="Save Button">
                                         <connections>
-                                            <action selector="shareMemedImage:" destination="DS3-oB-Omj" id="uQp-cM-D3p"/>
+                                            <action selector="saveMemedImage:" destination="DS3-oB-Omj" id="Ref-jc-sJs"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4ow-Me-5aR"/>
@@ -161,6 +161,14 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="6oM-M6-8z0"/>
+                                                <exclude reference="MKM-kB-qnX"/>
+                                                <exclude reference="NZC-Mu-zO2"/>
+                                                <exclude reference="RUe-Y1-HRv"/>
+                                                <exclude reference="TOi-JD-vvJ"/>
+                                                <exclude reference="dwQ-CL-IOH"/>
+                                                <exclude reference="p03-XK-v59"/>
+                                                <exclude reference="xan-Sf-8Ex"/>
                                                 <exclude reference="49S-Ta-9i0"/>
                                                 <exclude reference="5W5-C0-cCw"/>
                                                 <exclude reference="7WA-jv-rsE"/>
@@ -173,14 +181,6 @@
                                                 <exclude reference="cGM-Ri-29c"/>
                                                 <exclude reference="ffK-Ab-Ym1"/>
                                                 <exclude reference="kcg-Ay-p4E"/>
-                                                <exclude reference="6oM-M6-8z0"/>
-                                                <exclude reference="MKM-kB-qnX"/>
-                                                <exclude reference="NZC-Mu-zO2"/>
-                                                <exclude reference="RUe-Y1-HRv"/>
-                                                <exclude reference="TOi-JD-vvJ"/>
-                                                <exclude reference="dwQ-CL-IOH"/>
-                                                <exclude reference="p03-XK-v59"/>
-                                                <exclude reference="xan-Sf-8Ex"/>
                                                 <exclude reference="01u-9n-gdp"/>
                                                 <exclude reference="Gbh-9W-eFI"/>
                                                 <exclude reference="QPA-Xv-ES0"/>
@@ -197,11 +197,11 @@
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact">
                                             <mask key="constraints">
+                                                <include reference="TOi-JD-vvJ"/>
+                                                <include reference="dwQ-CL-IOH"/>
                                                 <include reference="5W5-C0-cCw"/>
                                                 <include reference="AC3-hN-XRg"/>
                                                 <include reference="HNx-lN-PaM"/>
-                                                <include reference="TOi-JD-vvJ"/>
-                                                <include reference="dwQ-CL-IOH"/>
                                                 <include reference="01u-9n-gdp"/>
                                                 <include reference="kQK-Xj-8Iw"/>
                                                 <include reference="phH-2Y-w2l"/>
@@ -209,11 +209,11 @@
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=regular">
                                             <mask key="constraints">
+                                                <include reference="RUe-Y1-HRv"/>
+                                                <include reference="p03-XK-v59"/>
                                                 <include reference="9VN-oh-UJI"/>
                                                 <include reference="EaK-RR-Tvn"/>
                                                 <include reference="kcg-Ay-p4E"/>
-                                                <include reference="RUe-Y1-HRv"/>
-                                                <include reference="p03-XK-v59"/>
                                                 <include reference="QPA-Xv-ES0"/>
                                                 <include reference="T1k-xN-8ox"/>
                                                 <include reference="j2B-ce-ie6"/>
@@ -221,11 +221,11 @@
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="constraints">
+                                                <include reference="MKM-kB-qnX"/>
+                                                <include reference="xan-Sf-8Ex"/>
                                                 <include reference="49S-Ta-9i0"/>
                                                 <include reference="Esc-dX-4mN"/>
                                                 <include reference="cGM-Ri-29c"/>
-                                                <include reference="MKM-kB-qnX"/>
-                                                <include reference="xan-Sf-8Ex"/>
                                                 <include reference="Gbh-9W-eFI"/>
                                                 <include reference="TY1-z4-hV8"/>
                                                 <include reference="tEt-yt-bBp"/>
@@ -233,11 +233,11 @@
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <mask key="constraints">
+                                                <include reference="6oM-M6-8z0"/>
+                                                <include reference="NZC-Mu-zO2"/>
                                                 <include reference="7WA-jv-rsE"/>
                                                 <include reference="K9I-9d-kpf"/>
                                                 <include reference="ffK-Ab-Ym1"/>
-                                                <include reference="6oM-M6-8z0"/>
-                                                <include reference="NZC-Mu-zO2"/>
                                                 <include reference="eKR-Fl-vmd"/>
                                                 <include reference="kFA-cS-VyH"/>
                                                 <include reference="mcf-8j-Ywp"/>
@@ -265,7 +265,7 @@
                                     <navigationItem title="Create Meme" id="vrq-x4-B9C">
                                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Wn4-gR-Byu">
                                             <connections>
-                                                <action selector="cancelAction:" destination="DS3-oB-Omj" id="kNi-FV-2I4"/>
+                                                <action selector="cancelCreatingMemedImage:" destination="DS3-oB-Omj" id="3cn-rf-5Ia"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -293,8 +293,10 @@
                         <outlet property="cancelButton" destination="Wn4-gR-Byu" id="nII-eT-dtd"/>
                         <outlet property="imageView" destination="1DC-IT-5wR" id="TvY-M7-p0s"/>
                         <outlet property="initialLabel" destination="zkm-aT-jNw" id="wQd-mQ-8qX"/>
+                        <outlet property="navigationBar" destination="v5K-vy-XP9" id="DZQ-zn-Jum"/>
+                        <outlet property="saveButton" destination="gfb-JQ-z1B" id="lgS-87-nf0"/>
                         <outlet property="scrollView" destination="Vjs-wv-XdQ" id="rbo-ym-udL"/>
-                        <outlet property="shareButton" destination="gfb-JQ-z1B" id="Mc3-6w-9iv"/>
+                        <outlet property="toolBar" destination="QYy-MN-tsJ" id="dRn-qq-0Ma"/>
                         <outlet property="topTextField" destination="CgR-uh-Yjg" id="DC9-eg-lRM"/>
                     </connections>
                 </viewController>
@@ -306,6 +308,6 @@
     <resources>
         <image name="album" width="35" height="35"/>
         <image name="camera" width="35" height="30"/>
-        <image name="share" width="35" height="38"/>
+        <image name="save" width="35" height="33"/>
     </resources>
 </document>
