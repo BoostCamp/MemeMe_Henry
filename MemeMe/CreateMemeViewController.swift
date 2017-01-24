@@ -8,26 +8,34 @@
 
 import UIKit
 
-class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 	
 	// MARK: Properties
 	
+	let memeTextAttributes:[String:Any] = [
+		NSStrokeColorAttributeName: UIColor.black,
+		NSForegroundColorAttributeName: UIColor.white,
+		NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+		NSStrokeWidthAttributeName: -3.0
+	]
 	
-	
+	var activeTextField: UITextField!
+
 	// MARK: IBOutlets
 	
 	@IBOutlet weak var cameraButton: UIBarButtonItem!
 	@IBOutlet weak var shareButton: UIBarButtonItem!
 	@IBOutlet weak var cancelButton: UIBarButtonItem!
-	@IBOutlet weak var topLabel: UILabel!
-	@IBOutlet weak var bottomLabel: UILabel!
+	@IBOutlet weak var topTextField: UITextField!
+	@IBOutlet weak var bottomTextField: UITextField!
 	@IBOutlet weak var imageView: UIImageView!
 
 	// MARK: Life cycle of View Controller
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+		self.topTextField.delegate = self
+		self.bottomTextField.delegate = self
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -40,7 +48,10 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		// TODO: delete this code when CreateMemeViewController is used at the main view controller
 		self.cancelButton.isEnabled = false
 		
-		// TODO: set top and bottom label font
+		self.topTextField.defaultTextAttributes = memeTextAttributes
+		self.topTextField.textAlignment = .center
+		self.bottomTextField.defaultTextAttributes = memeTextAttributes
+		self.bottomTextField.textAlignment = .center
 	}
 	
 	// MARK: IBActions
@@ -86,6 +97,28 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 				self.shareButton.isEnabled = true
 			}
 		}
+	}
+	
+	// MARK: Delegate methods of UITextFieldDelegate
+	
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		// TODO: clear when textField.text == "TOP" or "BOTTOM"
+		if textField.text! == "TOP" || textField.text! == "BOTTOM" {
+			textField.text = ""
+		}
+		
+		self.activeTextField = textField
+	}
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		self.activeTextField = nil
+		return true
+	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		self.view.endEditing(true)
+		self.activeTextField = nil
 	}
 }
 
