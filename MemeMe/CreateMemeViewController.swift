@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CreateMemeViewController.swift
 //  MemeMe
 //
 //  Created by JUNYEONG.YOO on 1/24/17.
@@ -66,11 +66,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		
 		// Subscribe keyboard notification
 		self.subscribeToKeyboardNotification()
-		
-		// TODO: delete this code when CreateMemeViewController is used at the main view controller
-		self.cancelButton.isEnabled = false
-		
-			}
+	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
@@ -122,7 +118,6 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	// MARK: Delegate methods of UITextFieldDelegate
 	
 	func textFieldDidBeginEditing(_ textField: UITextField) {
-		// TODO: clear when textField.text == "TOP" or "BOTTOM"
 		if textField.text! == "TOP" || textField.text! == "BOTTOM" {
 			textField.text = ""
 		}
@@ -204,15 +199,13 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		let confirmAction = UIAlertAction(title: "Confirm", style: .default) { action in
 			let meme = Meme(topText: self.topTextField.text!, bottomText: self.bottomTextField.text!, originalImage: self.imageView.image!, memedImage: self.generateMemedImage())
 			
-			// TODO: save a meme instance
-			print(meme)
+			MemeCollection.insert(meme)
+			
+			// After saving meme instant, close the alert controller
 			self.dismiss(animated: true, completion: nil)
 		}
 		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) {
-			action in
-			self.dismiss(animated: true, completion: nil)
-		}
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 		
 		controller.addAction(confirmAction)
 		controller.addAction(cancelAction)
