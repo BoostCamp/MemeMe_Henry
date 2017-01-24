@@ -33,7 +33,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="nin-iR-rJo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="nin-iR-rJo">
                                 <rect key="frame" x="77.5" y="223.5" width="220" height="220"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="170" id="2jT-1f-YF2"/>
@@ -196,6 +196,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="205" height="200"/>
+        <image name="logo" width="205" height="200"/>
     </resources>
 </document>
