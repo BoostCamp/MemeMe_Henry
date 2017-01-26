@@ -39,7 +39,7 @@ class CollectionViewController: UICollectionViewController {
 		self.collectionView?.reloadData()
 	}
 
-    // MARK: UICollectionViewDataSource
+    // MARK: Delegate methods for UICollectionView
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MemeCollection.count()
@@ -53,6 +53,13 @@ class CollectionViewController: UICollectionViewController {
     
         return UICollectionViewCell()
     }
+	
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "DetailMemeViewController") as? DetailMemeViewController {
+			controller.detailMemeOf = indexPath.row
+			self.navigationController?.pushViewController(controller, animated: true)
+		}
+	}
 	
 	// MARK: Create a new meme image
 	

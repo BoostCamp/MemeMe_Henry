@@ -20,6 +20,10 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	]
 	
 	var activeTextField: UITextField!
+	
+	// Set properties if edit mode
+	var isEditMode: Bool = false
+	var editMemeOf: Int!
 
 	// MARK: IBOutlets
 	
@@ -51,8 +55,18 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		// Check whether the application could use camera
 		self.cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
 
-		// Disable share button initially
-		self.saveButton.isEnabled = false
+		// Disable save button initially if not edit mode
+		if self.isEditMode {
+			self.saveButton.isEnabled = true
+			self.topTextField.isHidden = false
+			self.bottomTextField.isHidden = false
+			self.initialLabel.isHidden = true
+		
+		} else {
+			self.saveButton.isEnabled = false
+			self.topTextField.isHidden = true
+			self.bottomTextField.isHidden = true
+		}
 		
 		// Set attributes of the text field
 		self.topTextField.defaultTextAttributes = memeTextAttributes
@@ -60,12 +74,16 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.bottomTextField.defaultTextAttributes = memeTextAttributes
 		self.bottomTextField.textAlignment = .center
 		
-		// Hide text field initially
-		self.topTextField.isHidden = true
-		self.bottomTextField.isHidden = true
-		
 		// Subscribe keyboard notification
 		self.subscribeToKeyboardNotification()
+		
+		// Set if edit mode
+		if self.isEditMode {
+			let meme = MemeCollection.select(at: self.editMemeOf)
+			self.imageView.image = meme.originalImage
+			self.topTextField.text = meme.topText
+			self.bottomTextField.text = meme.bottomText
+		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -199,7 +217,12 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		let confirmAction = UIAlertAction(title: "Confirm", style: .default) { action in
 			let meme = Meme(topText: self.topTextField.text!, bottomText: self.bottomTextField.text!, originalImage: self.imageView.image!, memedImage: self.generateMemedImage())
 			
-			MemeCollection.insert(meme)
+			if self.isEditMode {
+				MemeCollection.update(at: self.editMemeOf, meme)
+			
+			} else {
+				MemeCollection.insert(meme)
+			}
 			
 			// After saving meme instant, close the alert controller
 			self.dismiss(animated: true, completion: nil)

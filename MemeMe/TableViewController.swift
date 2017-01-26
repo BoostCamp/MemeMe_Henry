@@ -10,12 +10,6 @@ import UIKit
 
 class TableViewController: UITableViewController {
 	
-	// MARK: Properties
-	
-	
-	// MARK: IBOutlets
-	
-	
 	// MARK: Life cycle of view controller
 
     override func viewDidLoad() {
@@ -25,7 +19,13 @@ class TableViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.tableView.reloadData()
-		// TODO: do when there's no memed image
+		
+		if MemeCollection.count() == 0 {
+			self.tableView.isHidden = true
+		
+		} else {
+			self.tableView.isHidden = false
+		}
 	}
 
 	// MARK: Delegate methods for UITableView
@@ -50,7 +50,10 @@ class TableViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		// TODO: do when a user click a cell
+		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "DetailMemeViewController") as? DetailMemeViewController {
+			controller.detailMemeOf = indexPath.row
+			self.navigationController?.pushViewController(controller, animated: true)
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
