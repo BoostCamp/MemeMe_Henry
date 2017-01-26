@@ -35,7 +35,7 @@ class TableViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell") as? MemeTableViewCell {
+		if let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell", for: indexPath) as? MemeTableViewCell {
 			let meme: Meme = MemeCollection.select(at: indexPath.row)
 			
 			cell.topLabel.text = meme.topText
@@ -54,6 +54,7 @@ class TableViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		// FIXME: Can I change this hard code?
 		return 101.0
 	}
 	

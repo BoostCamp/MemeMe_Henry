@@ -1,0 +1,65 @@
+//
+//  CollectionViewController.swift
+//  MemeMe
+//
+//  Created by JUNYEONG.YOO on 1/26/17.
+//  Copyright © 2017 Boostcamp. All rights reserved.
+//
+
+import UIKit
+
+class CollectionViewController: UICollectionViewController {
+	
+	// MARK: Properties
+	
+	// MARK: IBOutlets
+	
+	@IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+
+	// MARK: Life cycle of view controller
+	
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Set the size of Collection view cell
+		let space: CGFloat = 3.0
+		let dimension = self.view.frame.size.width / (space * 1.5)
+		
+		self.flowLayout.minimumInteritemSpacing = space
+		self.flowLayout.minimumLineSpacing = space
+		self.flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+		
+    }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.collectionView?.reloadData()
+	}
+
+    // MARK: UICollectionViewDataSource
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MemeCollection.count()
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memeCell", for: indexPath) as? MemeCollectionViewCell {
+			cell.memeImageView.image = MemeCollection.select(at: indexPath.row).memedImage
+			return cell
+		}
+    
+        return UICollectionViewCell()
+    }
+	
+	// MARK: Create a new meme image
+	
+	@IBAction func createNewMemeImage(_ sender: Any) {
+		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "CreateMemeViewController") as? CreateMemeViewController {
+			self.present(controller, animated: true, completion: nil)
+		}
+	}
+
+}
