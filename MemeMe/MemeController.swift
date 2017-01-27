@@ -1,5 +1,5 @@
 //
-//  MemeCollection.swift
+//  MemeController.swift
 //  MemeMe
 //
 //  Created by JUNYEONG.YOO on 1/25/17.
@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-
-struct MemeCollection {
+struct MemeController {
 	
 	private static var appDelegate: AppDelegate {
 		return UIApplication.shared.delegate as! AppDelegate
@@ -24,6 +23,7 @@ struct MemeCollection {
 	// Add a new memed image to the array
 	static func insert(_ meme: Meme) {
 		appDelegate.memes.append(meme)
+		RealmController.insert(meme)
 	}
 	
 	// Get a memed image from the array
@@ -32,7 +32,9 @@ struct MemeCollection {
 	}
 	
 	// Update a memed image
-	static func update(at index: Int, _ meme: Meme) {
-		appDelegate.memes[index] = meme
+	static func update(at index: Int, _ updatedMeme: Meme) {
+		let oldMeme = appDelegate.memes[index]
+		appDelegate.memes[index] = updatedMeme
+		RealmController.update(old: oldMeme, updated: updatedMeme)
 	}
 }

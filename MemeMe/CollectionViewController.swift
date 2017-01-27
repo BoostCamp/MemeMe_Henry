@@ -42,12 +42,19 @@ class CollectionViewController: UICollectionViewController {
     // MARK: Delegate methods for UICollectionView
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MemeCollection.count()
+        return MemeController.count()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memeCell", for: indexPath) as? MemeCollectionViewCell {
-			cell.memeImageView.image = MemeCollection.select(at: indexPath.row).memedImage
+			let meme: Meme = MemeController.select(at: indexPath.row)
+			
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let photoURL = URL(fileURLWithPath: documentDirectory)
+			let memedImageURL = photoURL.appendingPathComponent(meme.memedImageName)
+			
+			cell.memeImageView.image = UIImage(contentsOfFile: memedImageURL.path)
+
 			return cell
 		}
     

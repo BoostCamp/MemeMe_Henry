@@ -7,12 +7,17 @@
 //
 
 import Foundation
-import UIKit
+import RealmSwift
 
-struct Meme {
+class Meme: Object {
 	
-	var topText: String
-	var bottomText: String
-	var originalImage: UIImage
-	var memedImage: UIImage
+	dynamic var memeID = 0
+	dynamic var topText = ""
+	dynamic var bottomText = ""
+	dynamic var originalImageName = ""
+	dynamic var memedImageName = ""
+	
+	override class func primaryKey() -> String? {
+		return "memeID"
+	}
 }

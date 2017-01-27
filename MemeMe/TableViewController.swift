@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UITableViewController {
 	
-	// MARK: Life cycle of view controller
+	// MARK: - Life cycle of view controller
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class TableViewController: UITableViewController {
 		super.viewWillAppear(animated)
 		self.tableView.reloadData()
 		
-		if MemeCollection.count() == 0 {
+		if MemeController.count() == 0 {
 			self.tableView.isHidden = true
 		
 		} else {
@@ -28,19 +28,23 @@ class TableViewController: UITableViewController {
 		}
 	}
 
-	// MARK: Delegate methods for UITableView
+	// MARK: - Delegate methods for UITableView
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return MemeCollection.count()
+		return MemeController.count()
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell", for: indexPath) as? MemeTableViewCell {
-			let meme: Meme = MemeCollection.select(at: indexPath.row)
+			let meme: Meme = MemeController.select(at: indexPath.row)
+			
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let photoURL = URL(fileURLWithPath: documentDirectory)
+			let memedImageURL = photoURL.appendingPathComponent(meme.memedImageName)
 			
 			cell.topLabel.text = meme.topText
 			cell.bottomLabel.text = meme.bottomText
-			cell.memeImageView.image = meme.memedImage
+			cell.memeImageView.image = UIImage(contentsOfFile: memedImageURL.path)
 			cell.accessoryType = .disclosureIndicator
 			
 			return cell
@@ -61,7 +65,7 @@ class TableViewController: UITableViewController {
 		return 101.0
 	}
 	
-	// MARK: Create a new meme image
+	// MARK: - Create a new meme image
 	
 	@IBAction func createNewMemeImage(_ sender: Any) {
 		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "CreateMemeViewController") as? CreateMemeViewController {

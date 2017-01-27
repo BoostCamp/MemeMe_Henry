@@ -10,7 +10,7 @@ import UIKit
 
 class DetailMemeViewController: UIViewController {
 	
-	// MARK: Properties
+	// MARK: - Properties
 	var detailMemeOf: Int!
 	
 	let memeTextAttributes:[String:Any] = [
@@ -20,13 +20,13 @@ class DetailMemeViewController: UIViewController {
 		NSStrokeWidthAttributeName: -3.0
 	]
 
-	// MARK: IBOutlets
+	// MARK: - IBOutlets
 	
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var topTextField: UITextField!
 	@IBOutlet weak var bottomTextField: UITextField!
 	
-	// MARK: Life cycle of view controller
+	// MARK: - Life cycle of view controller
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +39,13 @@ class DetailMemeViewController: UIViewController {
 		self.topTextField.isEnabled = false
 		self.bottomTextField.isEnabled = false
 		
-		let meme = MemeCollection.select(at: self.detailMemeOf)
-		self.imageView.image = meme.originalImage
+		let meme = MemeController.select(at: self.detailMemeOf)
+		
+		let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+		let photoURL = URL(fileURLWithPath: documentDirectory)
+		let originalImageURL = photoURL.appendingPathComponent(meme.originalImageName)
+		
+		self.imageView.image = UIImage(contentsOfFile: originalImageURL.path)
 		self.topTextField.text = meme.topText
 		self.bottomTextField.text = meme.bottomText
 		
@@ -51,7 +56,7 @@ class DetailMemeViewController: UIViewController {
 		self.bottomTextField.textAlignment = .center
 	}
 
-	// MARK: Edit meme image when a user click the edit button
+	// MARK: - Edit meme image when a user click the edit button
 	
 	@IBAction func editMemeAction(_ sender: Any) {
 		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "CreateMemeViewController") as? CreateMemeViewController {

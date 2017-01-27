@@ -12,11 +12,11 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	
 	// MARK: - Properties
 	
-	let memeTextAttributes:[String:Any] = [
-		NSStrokeColorAttributeName: UIColor.black,
-		NSForegroundColorAttributeName: UIColor.white,
-		NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-		NSStrokeWidthAttributeName: -3.0
+	let memeTextAttributes: [String : Any] = [
+		NSStrokeColorAttributeName : UIColor.black,
+		NSForegroundColorAttributeName : UIColor.white,
+		NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+		NSStrokeWidthAttributeName : -3.0
 	]
 	
 	var activeTextField: UITextField!
@@ -25,8 +25,9 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	var isEditMode: Bool = false
 	var editMemeOf: Int!
 	
-	// Save image path
-	var originalImagePath: String = ""
+	// Save image name
+	var originalImageName: String = ""
+	var memedImageName: String = ""
 	
 
 	// MARK: - IBOutlets
@@ -51,6 +52,19 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		
 		// Hide keyboard when a user touches screen
 		self.scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+		
+		// Set if edit mode
+		if self.isEditMode {
+			let meme = MemeController.select(at: self.editMemeOf)
+			
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let photoURL = URL(fileURLWithPath: documentDirectory)
+			let originalImageURL = photoURL.appendingPathComponent(meme.originalImageName)
+			
+			self.imageView.image = UIImage(contentsOfFile: originalImageURL.path)
+			self.topTextField.text = meme.topText
+			self.bottomTextField.text = meme.bottomText
+		}
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -80,14 +94,6 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		
 		// Subscribe keyboard notification
 		self.subscribeToKeyboardNotification()
-		
-		// Set if edit mode
-		if self.isEditMode {
-			let meme = MemeCollection.select(at: self.editMemeOf)
-			self.imageView.image = meme.originalImage
-			self.topTextField.text = meme.topText
-			self.bottomTextField.text = meme.bottomText
-		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -119,16 +125,20 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
 		if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
 			self.imageView.image = selectedImage
-		}
-		
-		// Get path of selected image
-		if let selectedImageURL = info[UIImagePickerControllerReferenceURL] as? URL {
-			let imageName = selectedImageURL.lastPathComponent
+			
+			// Save original image to document directory
 			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 			let photoURL = URL(fileURLWithPath: documentDirectory)
-			let localPath = photoURL.appendingPathComponent(imageName).path
+			let originalImageName = self.generateOriginalImageName()
+			let originalImageURL = photoURL.appendingPathComponent(originalImageName)
 			
-			self.originalImagePath = localPath
+			do {
+				try UIImagePNGRepresentation(selectedImage)?.write(to: originalImageURL, options: .atomic)
+				self.originalImageName = originalImageName
+			
+			} catch {
+				print("Original image is not saved in document directory :(")
+			}
 		}
 		
 		self.dismiss(animated: false) {
@@ -229,23 +239,32 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		let controller = UIAlertController(title: "Save memed image", message: "Do you want save this memed image?", preferredStyle: .actionSheet)
 		
 		let confirmAction = UIAlertAction(title: "Confirm", style: .default) { action in
-			let meme = Meme(topText: self.topTextField.text!, bottomText: self.bottomTextField.text!, originalImage: self.imageView.image!, memedImage: self.generateMemedImage())
-			
-			if self.isEditMode {
-				MemeCollection.update(at: self.editMemeOf, meme)
-			
-			} else {
-				MemeCollection.insert(meme)
-			}
 			
 			// Save memed image to document directory
 			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-			let imageName = self.generateImageName()
+			let memedImageName = self.generateMemedImageName()
 			let photoURL = URL(fileURLWithPath: documentDirectory)
-			let localPath = photoURL.appendingPathComponent(imageName)
+			let memedImageURL = photoURL.appendingPathComponent(memedImageName)
 			
 			do {
-				try UIImagePNGRepresentation(self.generateMemedImage())?.write(to: localPath, options: .atomic)
+				try UIImagePNGRepresentation(self.generateMemedImage())?.write(to: memedImageURL, options: .atomic)
+				self.memedImageName = memedImageName
+				
+				// Save meme information to the array and Realm
+				let meme = Meme()
+				meme.memeID = Int(Date().timeIntervalSinceReferenceDate)
+				meme.topText = self.topTextField.text!
+				meme.bottomText = self.bottomTextField.text!
+				meme.originalImageName = self.originalImageName
+				meme.memedImageName = self.memedImageName
+				
+				if self.isEditMode {
+					MemeController.update(at: self.editMemeOf, meme)
+					
+				} else {
+					MemeController.insert(meme)
+				}
+
 			
 			} catch {
 				print("Memed image is not saved in document directory :(")
@@ -262,7 +281,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.present(controller, animated: true, completion: nil)
 	}
 	
-	func generateImageName() -> String {
+	func generateMemedImageName() -> String {
 		let date = NSDate()
 		let calendar = NSCalendar.current
 		let year = calendar.component(.year, from: date as Date)
@@ -272,7 +291,20 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		let minute = calendar.component(.minute, from: date as Date)
 		let second = calendar.component(.second, from: date as Date)
 		
-		return "memed_\(year)-\(month)-\(day)-\(hour)-\(minute)-\(second).PNG"
+		return "memed_\(year)-\(month)-\(day)-\(hour)-\(minute)-\(second).png"
+	}
+	
+	func generateOriginalImageName() -> String {
+		let date = NSDate()
+		let calendar = NSCalendar.current
+		let year = calendar.component(.year, from: date as Date)
+		let month = calendar.component(.month, from: date as Date)
+		let day = calendar.component(.day, from: date as Date)
+		let hour = calendar.component(.hour, from: date as Date)
+		let minute = calendar.component(.minute, from: date as Date)
+		let second = calendar.component(.second, from: date as Date)
+		
+		return "original_\(year)-\(month)-\(day)-\(hour)-\(minute)-\(second).png"
 	}
 	
 	// MARK: - Cancel creating meme
