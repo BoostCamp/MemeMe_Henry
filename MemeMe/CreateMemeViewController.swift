@@ -10,7 +10,7 @@ import UIKit
 
 class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 	
-	// MARK: Properties
+	// MARK: - Properties
 	
 	let memeTextAttributes:[String:Any] = [
 		NSStrokeColorAttributeName: UIColor.black,
@@ -24,8 +24,12 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	// Set properties if edit mode
 	var isEditMode: Bool = false
 	var editMemeOf: Int!
+	
+	// Save image path
+	var originalImagePath: String = ""
+	
 
-	// MARK: IBOutlets
+	// MARK: - IBOutlets
 	
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -38,7 +42,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	@IBOutlet weak var navigationBar: UINavigationBar!
 	@IBOutlet weak var toolBar: UIToolbar!
 
-	// MARK: Life cycle of View Controller
+	// MARK: - Life cycle of View Controller
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -93,7 +97,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.unsubscribeToKeyboardNotification()
 	}
 	
-	// MARK: Pick an image
+	// MARK: - Pick an image
 	
 	@IBAction func pickAnImageFromAlbum(_ sender: Any) {
 		let controller = UIImagePickerController()
@@ -110,14 +114,24 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.present(controller, animated: true, completion: nil)
 	}
 	
-	// MARK: Delegate methods of UIImagePickerControllerDelegate
+	// MARK: - Delegate methods of UIImagePickerControllerDelegate
 
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
 		if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
 			self.imageView.image = selectedImage
 		}
 		
-		self.dismiss(animated: true) {
+		// Get path of selected image
+		if let selectedImageURL = info[UIImagePickerControllerReferenceURL] as? URL {
+			let imageName = selectedImageURL.lastPathComponent
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let photoURL = URL(fileURLWithPath: documentDirectory)
+			let localPath = photoURL.appendingPathComponent(imageName).path
+			
+			self.originalImagePath = localPath
+		}
+		
+		self.dismiss(animated: false) {
 			self.saveButton.isEnabled = true
 			self.initialLabel.isHidden = true
 			self.topTextField.isHidden = false
@@ -126,14 +140,14 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	}
 	
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-		self.dismiss(animated: true) {
+		self.dismiss(animated: false) {
 			if self.imageView.image != nil {
 				self.saveButton.isEnabled = true
 			}
 		}
 	}
 	
-	// MARK: Delegate methods of UITextFieldDelegate
+	// MARK: - Delegate methods of UITextFieldDelegate
 	
 	func textFieldDidBeginEditing(_ textField: UITextField) {
 		if textField.text! == "TOP" || textField.text! == "BOTTOM" {
@@ -149,7 +163,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		return true
 	}
 	
-	// MARK: Subscription to Keyboard showing up or hiding
+	// MARK: - Subscription to Keyboard showing up or hiding
 	
 	func subscribeToKeyboardNotification() {
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
@@ -192,7 +206,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		}
 	}
 	
-	// MARK: Generate and save memed image
+	// MARK: - Generate and save memed image
 	
 	func generateMemedImage() -> UIImage {
 		// Hide navigation bar and tool bar
@@ -224,6 +238,19 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 				MemeCollection.insert(meme)
 			}
 			
+			// Save memed image to document directory
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let imageName = self.generateImageName()
+			let photoURL = URL(fileURLWithPath: documentDirectory)
+			let localPath = photoURL.appendingPathComponent(imageName)
+			
+			do {
+				try UIImagePNGRepresentation(self.generateMemedImage())?.write(to: localPath, options: .atomic)
+			
+			} catch {
+				print("Memed image is not saved in document directory :(")
+			}
+			
 			// After saving meme instant, close the alert controller
 			self.dismiss(animated: true, completion: nil)
 		}
@@ -235,7 +262,20 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 		self.present(controller, animated: true, completion: nil)
 	}
 	
-	// MARK: Cancel creating meme
+	func generateImageName() -> String {
+		let date = NSDate()
+		let calendar = NSCalendar.current
+		let year = calendar.component(.year, from: date as Date)
+		let month = calendar.component(.month, from: date as Date)
+		let day = calendar.component(.day, from: date as Date)
+		let hour = calendar.component(.hour, from: date as Date)
+		let minute = calendar.component(.minute, from: date as Date)
+		let second = calendar.component(.second, from: date as Date)
+		
+		return "memed_\(year)-\(month)-\(day)-\(hour)-\(minute)-\(second).PNG"
+	}
+	
+	// MARK: - Cancel creating meme
 
 	@IBAction func cancelCreatingMemedImage(_ sender: Any) {
 		self.dismiss(animated: true, completion: nil)
