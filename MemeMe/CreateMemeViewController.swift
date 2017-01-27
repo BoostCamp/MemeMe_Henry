@@ -42,6 +42,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	@IBOutlet weak var initialLabel: UILabel!
 	@IBOutlet weak var navigationBar: UINavigationBar!
 	@IBOutlet weak var toolBar: UIToolbar!
+	@IBOutlet weak var captureView: UIView!
 
 	// MARK: - Life cycle of View Controller
 	
@@ -219,18 +220,10 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	// MARK: - Generate and save memed image
 	
 	func generateMemedImage() -> UIImage {
-		// Hide navigation bar and tool bar
-		self.navigationBar.isHidden = true
-		self.toolBar.isHidden = true
-		
-		UIGraphicsBeginImageContext(self.view.frame.size)
-		self.view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+		UIGraphicsBeginImageContextWithOptions(self.captureView.frame.size, true, 2.0)
+		self.captureView.drawHierarchy(in: CGRect(x: 0, y: 0, width: self.captureView.frame.size.width, height: self.captureView.frame.size.height), afterScreenUpdates: false)
 		let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
-		
-		// Show navigation bar and tool bar
-		self.navigationBar.isHidden = false
-		self.toolBar.isHidden = false
 		
 		return memedImage
 	}

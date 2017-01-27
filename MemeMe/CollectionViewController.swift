@@ -25,7 +25,7 @@ class CollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Set the size of Collection view cell
-		let space: CGFloat = 3.0
+		let space: CGFloat = 2.0
 		let dimension = self.view.frame.size.width / (space * 1.5)
 		
 		self.flowLayout.minimumInteritemSpacing = space
