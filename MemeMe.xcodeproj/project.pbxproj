@@ -13,6 +13,12 @@
 		CC0204D21E36595F00362B44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC0204D11E36595F00362B44 /* Assets.xcassets */; };
 		CC0204D51E36595F00362B44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC0204D31E36595F00362B44 /* LaunchScreen.storyboard */; };
 		CC15B4721E3762E600726A4A /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC15B4711E3762E600726A4A /* Meme.swift */; };
+		CC3E7F061E3B028D007A97D5 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F041E3B028D007A97D5 /* Realm.framework */; };
+		CC3E7F071E3B028D007A97D5 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F051E3B028D007A97D5 /* RealmSwift.framework */; };
+		CC3E7F081E3B029F007A97D5 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F041E3B028D007A97D5 /* Realm.framework */; };
+		CC3E7F091E3B029F007A97D5 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F041E3B028D007A97D5 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC3E7F0A1E3B029F007A97D5 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F051E3B028D007A97D5 /* RealmSwift.framework */; };
+		CC3E7F0B1E3B029F007A97D5 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC3E7F051E3B028D007A97D5 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CCADF07F1E379858004585F7 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF07E1E379858004585F7 /* TableViewController.swift */; };
 		CCADF0811E37AC79004585F7 /* MemeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF0801E37AC79004585F7 /* MemeCollection.swift */; };
 		CCADF0851E37B285004585F7 /* MemeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADF0831E37B285004585F7 /* MemeTableViewCell.swift */; };
@@ -20,6 +26,21 @@
 		CCF84F7A1E39C9E10082B493 /* MemeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF84F791E39C9E10082B493 /* MemeCollectionViewCell.swift */; };
 		CCF84F7C1E39DFC40082B493 /* DetailMemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF84F7B1E39DFC40082B493 /* DetailMemeViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CC3E7F0C1E3B029F007A97D5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CC3E7F0B1E3B029F007A97D5 /* RealmSwift.framework in Embed Frameworks */,
+				CC3E7F091E3B029F007A97D5 /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CC0204C41E36595F00362B44 /* MemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,6 +51,8 @@
 		CC0204D41E36595F00362B44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC0204D61E36595F00362B44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC15B4711E3762E600726A4A /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
+		CC3E7F041E3B028D007A97D5 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		CC3E7F051E3B028D007A97D5 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		CCADF07E1E379858004585F7 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		CCADF0801E37AC79004585F7 /* MemeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollection.swift; sourceTree = "<group>"; };
 		CCADF0831E37B285004585F7 /* MemeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableViewCell.swift; sourceTree = "<group>"; };
@@ -43,6 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC3E7F081E3B029F007A97D5 /* Realm.framework in Frameworks */,
+				CC3E7F071E3B028D007A97D5 /* RealmSwift.framework in Frameworks */,
+				CC3E7F0A1E3B029F007A97D5 /* RealmSwift.framework in Frameworks */,
+				CC3E7F061E3B028D007A97D5 /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +95,8 @@
 		CC0204C61E36595F00362B44 /* MemeMe */ = {
 			isa = PBXGroup;
 			children = (
+				CC3E7F041E3B028D007A97D5 /* Realm.framework */,
+				CC3E7F051E3B028D007A97D5 /* RealmSwift.framework */,
 				CCADF0821E37B259004585F7 /* View */,
 				CCADF07D1E37981A004585F7 /* Controller */,
 				CC15B4701E3762BF00726A4A /* Model */,
@@ -119,6 +148,8 @@
 				CC0204C01E36595F00362B44 /* Sources */,
 				CC0204C11E36595F00362B44 /* Frameworks */,
 				CC0204C21E36595F00362B44 /* Resources */,
+				CC3E7F0C1E3B029F007A97D5 /* Embed Frameworks */,
+				CC3E7F0D1E3B02A6007A97D5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -176,6 +207,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CC3E7F0D1E3B02A6007A97D5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CC0204C01E36595F00362B44 /* Sources */ = {
@@ -314,6 +361,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Z6B6VA7B9D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MemeMe",
+				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Boostcamp.MemeMe;
@@ -327,6 +378,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Z6B6VA7B9D;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MemeMe",
+				);
 				INFOPLIST_FILE = MemeMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Boostcamp.MemeMe;
