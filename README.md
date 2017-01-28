@@ -11,7 +11,7 @@ This application generates meme images.
 - - - -
 > If you click this GIF, you can see the full version of demo video.
 
-[![Demo GIF](https://j.gifs.com/66yl7l.gif)](https://youtu.be/E89BQdkonGg)
+[![Demo GIF](https://j.gifs.com/48wjJ1.gif)](https://youtu.be/hhgzSvB2P9I)
 
 ### Features
 - - - -
