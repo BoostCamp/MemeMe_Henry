@@ -8,30 +8,12 @@
 
 import UIKit
 
-class CollectionViewController: UICollectionViewController {
-	
-	// MARK: Properties
-	
-	// MARK: IBOutlets
-	
-	@IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-	// MARK: Life cycle of view controller
+	// MARK: - Life cycle of view controller
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Set the size of Collection view cell
-		let space: CGFloat = 2.0
-		let dimension = self.view.frame.size.width / (space * 1.5)
-		
-		self.flowLayout.minimumInteritemSpacing = space
-		self.flowLayout.minimumLineSpacing = space
-		self.flowLayout.itemSize = CGSize(width: dimension, height: dimension)
-		
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +21,7 @@ class CollectionViewController: UICollectionViewController {
 		self.collectionView?.reloadData()
 	}
 
-    // MARK: Delegate methods for UICollectionView
+    // MARK: - Delegate methods for UICollectionView
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MemeController.count()
@@ -68,7 +50,22 @@ class CollectionViewController: UICollectionViewController {
 		}
 	}
 	
-	// MARK: Create a new meme image
+	// MARK: - Delegate methods for UICollectionViewDelegateFlowLayout
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let width: CGFloat = collectionView.frame.width / 3 - 1
+		return CGSize(width: width, height: width)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 1.0
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+		return 1.0
+	}
+	
+	// MARK: - Create a new meme image
 	
 	@IBAction func createNewMemeImage(_ sender: Any) {
 		if let controller = self.storyboard?.instantiateViewController(withIdentifier: "CreateMemeViewController") as? CreateMemeViewController {
