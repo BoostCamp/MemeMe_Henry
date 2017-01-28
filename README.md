@@ -5,7 +5,7 @@
 > This application is made for Udacity (UIKit Fundamentals) class and the second project for Boostcamp.
     
     
-This application generates meme images.
+**Meme** (/mēm/) is a humorous image, video, piece of text, etc., that is copied (often with slight variations) and spread rapidly by Internet users. You can make your own meme images using **MemeMe application** and share it with your friends, family through Messenger, Facebook etc.
 
 ### At a Glance
 - - - -
