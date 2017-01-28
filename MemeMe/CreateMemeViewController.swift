@@ -115,7 +115,7 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	@IBAction func pickAnImageFromAlbum(_ sender: Any) {
 		let controller = UIImagePickerController()
 		controller.delegate = self
-		controller.sourceType = .photoLibrary
+		controller.sourceType = .savedPhotosAlbum
 		self.present(controller, animated: true, completion: nil)
 	}
 	
