@@ -1,5 +1,0 @@
-language: objective-c
-
-xcode_project: MemeMe.xcodeproj
-osx_image: xcode8.2
-
