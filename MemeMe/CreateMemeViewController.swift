@@ -29,6 +29,10 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	var originalImageName: String = ""
 	var memedImageName: String = ""
 	
+	// Save old image names for delete unused images from document directory
+	var oldOriginalImageName: String = ""
+	var oldMemedImageName: String = ""
+	
 
 	// MARK: - IBOutlets
 	
@@ -65,6 +69,8 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 			self.imageView.image = UIImage(contentsOfFile: originalImageURL.path)
 			self.topTextField.text = meme.topText
 			self.bottomTextField.text = meme.bottomText
+			self.oldOriginalImageName = meme.originalImageName
+			self.oldMemedImageName = meme.memedImageName
 		}
 	}
 	
@@ -248,11 +254,31 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 				meme.memeID = Int(Date().timeIntervalSinceReferenceDate)
 				meme.topText = self.topTextField.text!
 				meme.bottomText = self.bottomTextField.text!
+				
+				if self.originalImageName == "" {
+					self.originalImageName = self.oldOriginalImageName
+				}
+				
 				meme.originalImageName = self.originalImageName
 				meme.memedImageName = self.memedImageName
 				
 				if self.isEditMode {
 					MemeController.update(at: self.editMemeOf, meme)
+					
+					// Delete old original image and memed image from document directory
+					let fileManager = FileManager.default
+					let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+					let directoryURL = URL(fileURLWithPath: documentDirectory)
+					let oldOriginalImageURL = directoryURL.appendingPathComponent(self.oldOriginalImageName)
+					let oldMemedImageURL = directoryURL.appendingPathComponent(self.oldMemedImageName)
+					
+					do {
+						if self.originalImageName != self.oldOriginalImageName { try fileManager.removeItem(at: oldOriginalImageURL) }
+						try fileManager.removeItem(at: oldMemedImageURL)
+					
+					} catch {
+						print("Could not delete image from document directory")
+					}
 					
 				} else {
 					MemeController.insert(meme)
@@ -303,6 +329,19 @@ class CreateMemeViewController: UIViewController, UIImagePickerControllerDelegat
 	// MARK: - Cancel creating meme
 
 	@IBAction func cancelCreatingMemedImage(_ sender: Any) {
+		if self.originalImageName != "" {
+			let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+			let originalImageURL = URL(fileURLWithPath: documentDirectory).appendingPathComponent(self.originalImageName)
+			
+			let fileManager = FileManager.default
+			do {
+				try fileManager.removeItem(at: originalImageURL)
+			
+			} catch {
+				print("Could not delete original image")
+			}
+		}
+		
 		self.dismiss(animated: true, completion: nil)
 	}
 }

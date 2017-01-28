@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,9 +43,7 @@
                             </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iF1-I9-a1m">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <items>
-                                    <barButtonItem title="Item" id="tvJ-3T-Hsx"/>
-                                </items>
+                                <items/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -130,6 +129,18 @@
                                 <exclude reference="gKb-CA-dKo"/>
                                 <exclude reference="hDA-9I-4fc"/>
                                 <exclude reference="mol-tV-f94"/>
+                                <exclude reference="7My-6Y-6eR"/>
+                                <exclude reference="A3Z-9N-Z5Q"/>
+                                <exclude reference="Gkl-YK-dbD"/>
+                                <exclude reference="Jbm-NO-lEh"/>
+                                <exclude reference="PHB-bt-Zmn"/>
+                                <exclude reference="QUb-Lb-elb"/>
+                                <exclude reference="SvJ-0V-P5f"/>
+                                <exclude reference="fEO-El-vqo"/>
+                                <exclude reference="ibQ-vj-kda"/>
+                                <exclude reference="kXW-s2-12K"/>
+                                <exclude reference="pIU-i7-509"/>
+                                <exclude reference="yLI-RF-x8m"/>
                                 <exclude reference="8k2-dW-FjC"/>
                                 <exclude reference="Atr-dC-m1x"/>
                                 <exclude reference="Ezg-Pl-ltQ"/>
@@ -146,18 +157,6 @@
                                 <exclude reference="Onm-8M-Vdf"/>
                                 <exclude reference="YSI-61-Pvx"/>
                                 <exclude reference="pvC-qg-8v2"/>
-                                <exclude reference="7My-6Y-6eR"/>
-                                <exclude reference="A3Z-9N-Z5Q"/>
-                                <exclude reference="Gkl-YK-dbD"/>
-                                <exclude reference="Jbm-NO-lEh"/>
-                                <exclude reference="PHB-bt-Zmn"/>
-                                <exclude reference="QUb-Lb-elb"/>
-                                <exclude reference="SvJ-0V-P5f"/>
-                                <exclude reference="fEO-El-vqo"/>
-                                <exclude reference="ibQ-vj-kda"/>
-                                <exclude reference="kXW-s2-12K"/>
-                                <exclude reference="pIU-i7-509"/>
-                                <exclude reference="yLI-RF-x8m"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -169,13 +168,13 @@
                                 <include reference="X2p-LD-H4B"/>
                                 <include reference="aVu-ES-8dP"/>
                                 <include reference="mol-tV-f94"/>
+                                <include reference="7My-6Y-6eR"/>
+                                <include reference="SvJ-0V-P5f"/>
+                                <include reference="yLI-RF-x8m"/>
                                 <include reference="Atr-dC-m1x"/>
                                 <include reference="RP2-mO-IRU"/>
                                 <include reference="ca5-oj-kgC"/>
                                 <include reference="Onm-8M-Vdf"/>
-                                <include reference="7My-6Y-6eR"/>
-                                <include reference="SvJ-0V-P5f"/>
-                                <include reference="yLI-RF-x8m"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -186,13 +185,13 @@
                                 <include reference="7VU-If-hcb"/>
                                 <include reference="8zC-US-7Dx"/>
                                 <include reference="EFx-No-1Ss"/>
+                                <include reference="Jbm-NO-lEh"/>
+                                <include reference="QUb-Lb-elb"/>
+                                <include reference="pIU-i7-509"/>
                                 <include reference="8k2-dW-FjC"/>
                                 <include reference="Xhn-cg-Lsl"/>
                                 <include reference="bCQ-bR-8m4"/>
                                 <include reference="YSI-61-Pvx"/>
-                                <include reference="Jbm-NO-lEh"/>
-                                <include reference="QUb-Lb-elb"/>
-                                <include reference="pIU-i7-509"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -203,13 +202,13 @@
                                 <include reference="BiV-Wb-DGY"/>
                                 <include reference="gKb-CA-dKo"/>
                                 <include reference="hDA-9I-4fc"/>
+                                <include reference="A3Z-9N-Z5Q"/>
+                                <include reference="PHB-bt-Zmn"/>
+                                <include reference="ibQ-vj-kda"/>
                                 <include reference="HTu-gS-dI4"/>
                                 <include reference="UOR-mE-J3F"/>
                                 <include reference="yBW-D0-oHq"/>
                                 <include reference="pvC-qg-8v2"/>
-                                <include reference="A3Z-9N-Z5Q"/>
-                                <include reference="PHB-bt-Zmn"/>
-                                <include reference="ibQ-vj-kda"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -220,26 +219,34 @@
                                 <include reference="Jsg-sl-xA8"/>
                                 <include reference="Tpk-M7-oZr"/>
                                 <include reference="WfL-2n-Qaf"/>
+                                <include reference="Gkl-YK-dbD"/>
+                                <include reference="fEO-El-vqo"/>
+                                <include reference="kXW-s2-12K"/>
                                 <include reference="Ezg-Pl-ltQ"/>
                                 <include reference="apT-vq-pVe"/>
                                 <include reference="gCh-kd-9mF"/>
                                 <include reference="NCf-MW-hjM"/>
-                                <include reference="Gkl-YK-dbD"/>
-                                <include reference="fEO-El-vqo"/>
-                                <include reference="kXW-s2-12K"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Detail Meme" id="Ghb-q8-eR3">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="QuG-PC-09d">
-                            <connections>
-                                <action selector="editMemeAction:" destination="gLj-fA-Z9a" id="SXN-D2-XcO"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="trash" id="O47-lh-Zyq">
+                                <connections>
+                                    <action selector="deleteMemeAction:" destination="gLj-fA-Z9a" id="feC-A9-WYu"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="QuG-PC-09d">
+                                <connections>
+                                    <action selector="editMemeAction:" destination="gLj-fA-Z9a" id="SXN-D2-XcO"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="bottomTextField" destination="eF4-qK-E2L" id="BCv-Ih-iZ4"/>
                         <outlet property="imageView" destination="NNP-kP-YRO" id="itm-pZ-mdk"/>
+                        <outlet property="toolbarForSize" destination="iF1-I9-a1m" id="uzC-g8-7BX"/>
                         <outlet property="topTextField" destination="TS7-Zq-yau" id="BtI-3U-j8o"/>
                     </connections>
                 </viewController>

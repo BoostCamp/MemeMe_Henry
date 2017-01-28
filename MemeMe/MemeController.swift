@@ -37,4 +37,25 @@ struct MemeController {
 		appDelegate.memes[index] = updatedMeme
 		RealmController.update(old: oldMeme, updated: updatedMeme)
 	}
+	
+	// Delete a memed image
+	static func delete(at index: Int) {
+		let deletedMeme: Meme = appDelegate.memes.remove(at: index)
+		
+		// Delete images from document directory
+		let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+		let documentURL = URL(fileURLWithPath: documentDirectory)
+		let originalImageURL = documentURL.appendingPathComponent(deletedMeme.originalImageName)
+		let memedImageURL = documentURL.appendingPathComponent(deletedMeme.memedImageName)
+		
+		do {
+			try FileManager.default.removeItem(at: originalImageURL)
+			try FileManager.default.removeItem(at: memedImageURL)
+		
+		} catch {
+			print("Could not delete image from document directory")
+		}
+		
+		RealmController.delete(deletedMeme)
+	}
 }

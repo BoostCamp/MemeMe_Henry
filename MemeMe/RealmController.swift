@@ -24,13 +24,15 @@ class RealmController: NSObject {
 	
 	// Update a existing memed image
 	static func update(old: Meme, updated: Meme) {
-		let oldMeme = realm.objects(Meme.self).filter("memeID == \(old.memeID)").first!
+//		let oldMeme = realm.objects(Meme.self).filter("memeID == \(old.memeID)").first!
 		
 		try! realm.write {
-			oldMeme.topText = updated.topText
-			oldMeme.bottomText = updated.bottomText
-			oldMeme.originalImageName = updated.originalImageName
-			oldMeme.memedImageName = updated.memedImageName
+//			oldMeme.topText = updated.topText
+//			oldMeme.bottomText = updated.bottomText
+//			oldMeme.originalImageName = updated.originalImageName
+//			oldMeme.memedImageName = updated.memedImageName
+			realm.delete(old)
+			realm.add(updated)
 		}
 	}
 	
@@ -43,9 +45,9 @@ class RealmController: NSObject {
 		}
 	}
 	
-	static func removeAll() {
+	static func delete(_ deletedMeme: Meme) {
 		try! realm.write {
-			realm.deleteAll()
+			realm.delete(deletedMeme)
 		}
 	}
 }
