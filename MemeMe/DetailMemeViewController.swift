@@ -22,7 +22,6 @@ class DetailMemeViewController: UIViewController {
 
 	// MARK: - IBOutlets
 	
-	@IBOutlet weak var toolbarForSize: UIToolbar!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var topTextField: UITextField!
 	@IBOutlet weak var bottomTextField: UITextField!
@@ -33,7 +32,6 @@ class DetailMemeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-		self.toolbarForSize.isHidden = true
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -92,4 +90,17 @@ class DetailMemeViewController: UIViewController {
 		self.present(controller, animated: true, completion: nil)
 	}
 	
+	// MARK: - Share meme image
+	
+	@IBAction func shareMemeAction(_ sender: Any) {
+		let meme = MemeController.select(at: self.detailMemeOf)
+		
+		let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+		let memedImagePath = URL(fileURLWithPath: documentDirectory).appendingPathComponent(meme.memedImageName).path
+		let memedImage: UIImage = UIImage(contentsOfFile: memedImagePath)!
+		
+		
+		let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+		self.present(controller, animated: true, completion: nil)
+	}
 }

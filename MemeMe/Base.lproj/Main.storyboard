@@ -8,7 +8,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,7 +42,27 @@
                             </textField>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iF1-I9-a1m">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <items/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="m1X-Me-oeY"/>
+                                    <barButtonItem systemItem="action" id="zXK-lu-RmL">
+                                        <connections>
+                                            <action selector="shareMemeAction:" destination="gLj-fA-Z9a" id="Y0a-Ki-SgS"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="abV-4i-bHW"/>
+                                    <barButtonItem systemItem="compose" id="QuG-PC-09d">
+                                        <connections>
+                                            <action selector="editMemeAction:" destination="gLj-fA-Z9a" id="SXN-D2-XcO"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="saK-fz-DC9"/>
+                                    <barButtonItem systemItem="trash" id="O47-lh-Zyq">
+                                        <connections>
+                                            <action selector="deleteMemeAction:" destination="gLj-fA-Z9a" id="feC-A9-WYu"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="CJ6-hp-sfi"/>
+                                </items>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -229,24 +248,10 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail Meme" id="Ghb-q8-eR3">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="trash" id="O47-lh-Zyq">
-                                <connections>
-                                    <action selector="deleteMemeAction:" destination="gLj-fA-Z9a" id="feC-A9-WYu"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="compose" id="QuG-PC-09d">
-                                <connections>
-                                    <action selector="editMemeAction:" destination="gLj-fA-Z9a" id="SXN-D2-XcO"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Detail Meme" id="Ghb-q8-eR3"/>
                     <connections>
                         <outlet property="bottomTextField" destination="eF4-qK-E2L" id="BCv-Ih-iZ4"/>
                         <outlet property="imageView" destination="NNP-kP-YRO" id="itm-pZ-mdk"/>
-                        <outlet property="toolbarForSize" destination="iF1-I9-a1m" id="uzC-g8-7BX"/>
                         <outlet property="topTextField" destination="TS7-Zq-yau" id="BtI-3U-j8o"/>
                     </connections>
                 </viewController>
@@ -471,7 +476,7 @@
                                                 </variation>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT AN IMAGE FIRST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkm-aT-jNw">
-                                                <rect key="frame" x="49" y="264.5" width="277" height="30"/>
+                                                <rect key="frame" x="49" y="264" width="277" height="30"/>
                                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1030,10 +1035,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="album" width="35" height="35"/>
-        <image name="camera" width="35" height="30"/>
-        <image name="grid" width="35" height="36"/>
-        <image name="save" width="35" height="33"/>
-        <image name="table" width="35" height="32"/>
+        <image name="album" width="25" height="25"/>
+        <image name="camera" width="25" height="22"/>
+        <image name="grid" width="25" height="26"/>
+        <image name="save" width="25" height="24"/>
+        <image name="table" width="25" height="23"/>
     </resources>
 </document>
